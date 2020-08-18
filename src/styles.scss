@@ -1,4 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
+
+.custom-jumbotron {
+  background-color: #585858;
+  margin-top: 75px;
+  padding-top: 15px;
+}

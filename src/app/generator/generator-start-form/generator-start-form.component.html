@@ -1,0 +1,23 @@
+<div class="custom-jumbotron">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="input-group mb-3">
+            <input
+              formControlName="name"
+              type="text"
+              class="form-control form-control-lg"
+              placeholder="Enter the input's names separated by commas"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit">
+                Generate!
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
