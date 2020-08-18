@@ -3,9 +3,9 @@ import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { GeneratorFormService } from './generator-form.service';
+import { InputTypeEnum } from '../models/input-type.enum';
 import { ArrayUtility } from 'src/app/shared/utilities/array.utility';
 import { StringUtility } from 'src/app/shared/utilities/string.utility';
-import { InputTypeEnum } from 'src/app/shared/models/input-type.enum';
 
 
 @Component({
