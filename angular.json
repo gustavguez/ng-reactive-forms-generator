@@ -16,6 +16,7 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          "allowedCommonJsDependencies": ["highlight.js"],
           "options": {
             "outputPath": "public",
             "index": "src/index.html",
@@ -24,7 +25,10 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss",
+              "node_modules/highlight.js/styles/github.css"
+            ],
             "scripts": []
           },
           "configurations": {

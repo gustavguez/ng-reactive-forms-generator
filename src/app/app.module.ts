@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
@@ -15,8 +16,16 @@ import { GeneratorModule } from './generator/generator.module';
     CoreModule,
     SharedModule,
     GeneratorModule,
+    HighlightModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        fullLibraryLoader: () => import('highlight.js'),
+      },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

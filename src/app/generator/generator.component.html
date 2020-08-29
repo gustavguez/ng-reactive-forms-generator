@@ -1,24 +1,22 @@
 <app-generator-start-form (onAdd)="onStart($event)"></app-generator-start-form>
-<app-generator-welcome *ngIf="!displayGenerated && !startEditing"></app-generator-welcome>
+<app-generator-welcome
+  *ngIf="!displayGenerated && !startEditing"
+></app-generator-welcome>
 <app-generator-form *ngIf="!displayGenerated"></app-generator-form>
 
 <div class="container mt-3" *ngIf="displayGenerated">
   <div class="row">
     <div class="col-6">
       <h2>HTML</h2>
-      <pre class="mt-3">
-        <code>
-          {{ generatedHtmlString }}
-        </code>
-      </pre>
+      <pre
+        class="mt-3"
+      ><code [languages]="['HTML']" [highlight]="generatedHtmlString"></code></pre>
     </div>
     <div class="col-6">
       <h2>TypeScript</h2>
-      <pre class="mt-3">
-        <code>
-        {{ generatedTsString }}
-      </code>
-    </pre>
+      <pre
+        class="mt-3"
+      ><code [languages]="['TypeScript']" [highlight]="generatedTsString"></code></pre>
     </div>
   </div>
 </div>
