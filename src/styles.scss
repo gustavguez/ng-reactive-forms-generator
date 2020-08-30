@@ -3,8 +3,37 @@
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 
+/* JUMBOTRON STYLES */
 .custom-jumbotron {
   background-color: #585858;
   margin-top: 75px;
   padding-top: 15px;
 }
+
+/* ACCORDION STYLES */
+.accordion i.far {
+  font-size: 1.4em;
+  line-height: 1.4em;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.accordion .card-header .btn:focus {
+  box-shadow: none;
+}
+
+.accordion i.fa-plus-square {
+  display: inline-block;
+}
+.accordion i.fa-minus-square {
+  display: none;
+}
+
+.accordion .show i.fa-plus-square {
+  display: none;
+}
+.accordion .show i.fa-minus-square {
+  display: inline-block;
+}
+
+/* GENERAL STYLES */

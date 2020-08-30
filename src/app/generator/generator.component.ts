@@ -2,7 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ArrayUtility } from 'src/app/shared/utilities/array.utility';
-import { GeneratorFormService } from './generator-form/generator-form.service';
+import { GeneratorResultInterface } from './generator-result.interface';
+import { GeneratorService } from './generator.service';
+import { GeneratorFormInterface } from './generator-form.interface';
 
 @Component({
   selector: 'app-generator',
@@ -11,26 +13,33 @@ import { GeneratorFormService } from './generator-form/generator-form.service';
 })
 export class GeneratorComponent implements OnInit, OnDestroy {
   //Models
-  startEditing: boolean;
+  displayWelcome: boolean;
   displayGenerated: boolean;
-  generatedTsString: string;
+  generatorResult: GeneratorResultInterface;
   generatedHtmlString: string;
+  startForms: GeneratorFormInterface[];
   subscriptions: Subscription[];
 
   //Inject services
   constructor(
-    private generatorFormService: GeneratorFormService
+    private generatorService: GeneratorService
   ) { }
 
   //On component init
   ngOnInit(): void {
+    this.startForms = [];
+    this.displayWelcome = true;
+
     //Subscribes
     this.subscriptions = [
-      this.generatorFormService.onGenerateFinished.subscribe((args: { ts: string, html: string }) => {
-        //Load generated values
-        this.generatedTsString = args.ts;
-        this.generatedHtmlString = args.html;
-        this.displayGenerated = true;
+      this.generatorService.onGenerateRequested.subscribe((generators: GeneratorFormInterface[]) => {
+        this.startGenerating(generators);
+      }),
+      this.generatorService.onStartAgain.subscribe(() => {
+        this.startAgain();
+      }),
+      this.generatorService.onEditGenerated.subscribe(() => {
+        this.editGenerated();
       })
     ]
   }
@@ -41,13 +50,46 @@ export class GeneratorComponent implements OnInit, OnDestroy {
   }
 
   //Custom events
-  onStart(names: string[]): void {
-    if (ArrayUtility.hasValue(names)) {
-      //Set flag to hide welcome box
-      this.startEditing = true;
+  onStart(generators: GeneratorFormInterface[]): void {
+    if (ArrayUtility.hasValue(generators)) {
+      
+      //If the start generate it send inputs names by inputs
+      if(this.displayWelcome || this.displayGenerated){
+        this.startForms.push(...generators);
 
-      //Generate forms
-      this.generatorFormService.emitGenerateFormInputs(names);
+        //Set flag to hide welcome box
+        this.displayWelcome = false;
+
+        //Hide result
+        this.displayGenerated = false;
+      } else {
+        //Generate forms by event emitter
+        this.generatorService.emitGenerateForms(generators);
+      }
     }
+  }
+
+  //Private methods
+  private startGenerating(generators: GeneratorFormInterface[]): void {
+    //Generate and load it to results
+    this.generatorResult = this.generatorService.generate(generators);
+
+    //Display
+    this.displayGenerated = true;
+  }
+
+  private startAgain(): void {
+    this.startForms = [];
+
+    //Set flag to show welcome box
+    this.displayWelcome = true;
+
+    //Hide result
+    this.displayGenerated = false;
+  }
+
+  private editGenerated(): void {
+    //Hide result
+    this.displayGenerated = false;
   }
 }

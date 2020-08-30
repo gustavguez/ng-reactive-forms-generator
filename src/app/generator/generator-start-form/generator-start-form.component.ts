@@ -1,6 +1,10 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
+import { GeneratorFormInterface } from '../generator-form.interface';
+import { StringUtility } from '../../shared/utilities/string.utility';
+import { GeneratorFormTypesEnum } from '../generator-form-types.enum';
+
 @Component({
   selector: 'app-generator-start-form',
   templateUrl: './generator-start-form.component.html',
@@ -11,7 +15,7 @@ export class GeneratorStartFormComponent implements OnInit {
   static NAMES_SPLITTER_CHAR: string = ',';
 
   //Outputs
-  @Output() onAdd: EventEmitter<string[]> = new EventEmitter();
+  @Output() onAdd: EventEmitter<GeneratorFormInterface[]> = new EventEmitter();
 
   //Models
   form: FormGroup;
@@ -39,7 +43,13 @@ export class GeneratorStartFormComponent implements OnInit {
         .filter((name) => !!name);
 
       //Notify parent with output
-      this.onAdd.emit(names);
+      this.onAdd.emit(names.map(name => {
+        return { 
+          id: StringUtility.randomString(),
+          name: name,
+          type: GeneratorFormTypesEnum.TEXT //By default text
+        }
+      }));
 
       //Clear form
       this.form.reset();
