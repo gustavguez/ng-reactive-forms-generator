@@ -1,1 +1,13 @@
-<p>generator-core-template works!</p>
+<form [formGroup]="formGroup">
+    <div class="row">
+      <div class="col-12">
+          <div class="form-group">
+            <textarea 
+                class="form-control"
+                rows="5"
+                formControlName="template"
+                (change)="onValueChanged()"></textarea>            
+          </div>
+      </div>
+    </div>
+  </form>

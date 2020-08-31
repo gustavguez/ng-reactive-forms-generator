@@ -21,7 +21,40 @@
       <h3 class="mb-4 mt-2">Templates</h3>
 
       <app-accordion>
-        <app-accordion-item [title]="'name'"> </app-accordion-item>
+        <app-accordion-item [title]="'Component template'">
+          <app-generator-core-template 
+            [template]="generatorData.templates.componentTs"
+            (onTemplateValueChange)="onTemplateValueChange('componentTs', $event)">
+          </app-generator-core-template>
+        </app-accordion-item>
+
+        <app-accordion-item [title]="'Form builder line template'">
+          <app-generator-core-template 
+            [template]="generatorData.templates.formBuilderTs"
+            (onTemplateValueChange)="onTemplateValueChange('formBuilderTs', $event)">
+          </app-generator-core-template>
+        </app-accordion-item>
+
+        <app-accordion-item [title]="'Form template'">
+          <app-generator-core-template 
+            [template]="generatorData.templates.formHtml"
+            (onTemplateValueChange)="onTemplateValueChange('formHtml', $event)">
+          </app-generator-core-template>
+        </app-accordion-item>
+
+        <app-accordion-item [title]="'Input text template'">
+          <app-generator-core-template 
+            [template]="generatorData.templates.inputTextHtml"
+            (onTemplateValueChange)="onTemplateValueChange('inputTextHtml', $event)">
+          </app-generator-core-template>
+        </app-accordion-item>
+
+        <app-accordion-item [title]="'Input number template'">
+          <app-generator-core-template 
+            [template]="generatorData.templates.inputNumberHtml"
+            (onTemplateValueChange)="onTemplateValueChange('inputNumberHtml', $event)">
+          </app-generator-core-template>
+        </app-accordion-item>
       </app-accordion>
     </div>
   </div>

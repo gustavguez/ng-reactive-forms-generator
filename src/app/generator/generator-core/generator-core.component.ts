@@ -56,4 +56,12 @@ export class GeneratorCoreComponent implements OnInit, OnDestroy {
       this.generatorData.forms[index][newValue.key] = newValue.value;
     }
   }
+
+  onTemplateValueChange(template: string, newValue: string): void {
+    //Check
+    if(this.generatorData.templates[template]){
+      //Update value to model
+      this.generatorData.templates[template] = newValue;
+    }
+  }
 }

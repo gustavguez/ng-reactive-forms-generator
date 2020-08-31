@@ -40,13 +40,15 @@ export class GeneratorService {
 
     //Helper vars
     let componentsHtml = '';
-    let componentsTs = generator.templates.componentTs;
+    let componentsTs = '';
     let formHtml = generator.templates.formHtml;
+    let componentTs = generator.templates.componentTs;
 
     //Generate components
     ArrayUtility.each(generator.forms, (form: GeneratorFormInterface) => {
       let inputTemplate: string = this.getTemplateByFormType(form.type, generator.templates);
       let formGroupTemplate: string = generator.templates.formGroupHtml;
+      let formBuilderTemplate: string = generator.templates.formBuilderTs;
 
       //Render vars to input
       inputTemplate = this.renderTemplateVar(inputTemplate, 'id', form.id);
@@ -57,12 +59,17 @@ export class GeneratorService {
       formGroupTemplate = this.renderTemplateVar(formGroupTemplate, 'id', form.id);
       formGroupTemplate = this.renderTemplateVar(formGroupTemplate, 'label', form.label);
 
-      //Append to html
+      //Render form builder vars
+      formBuilderTemplate = this.renderTemplateVar(formBuilderTemplate, 'name', form.name);
+
+      //Append to global vars
       componentsHtml += this.renderTemplateVar(formGroupTemplate, 'children', inputTemplate);
+      componentsTs += formBuilderTemplate;
     });
 
-    //Load html
+    //Load html and ts
     result.html = this.renderTemplateVar(formHtml, 'children', componentsHtml);
+    result.ts = this.renderTemplateVar(componentTs, 'children', componentsTs);
 
     return result;
   }
@@ -79,6 +86,10 @@ export class GeneratorService {
         template = templates.inputTextHtml;
         break;
 
+      case GeneratorFormTypesEnum.NUMBER:
+        template = templates.inputNumberHtml;
+        break;
+
       default:
         break;
     }
@@ -89,36 +100,4 @@ export class GeneratorService {
     return StringUtility.replace(template, `@${name}`, value);
   }
 
-  // let generatedHtmlString: string = '';
-  //   let generatedTsString: string = `
-  //       form: FormGroup;
-
-  //       constructor(private formBuilder: FormBuilder) {}
-
-  //       ngOnInit(): void {
-  //         this.form = this.formBuilder.group({
-  //   `;
-
-  //   ArrayUtility.each(this.inputsForms.value, (inputGroup: any) => {
-  //     generatedHtmlString += `
-  //       <div class="form-group">
-  //         <label for="${inputGroup.id}">${inputGroup.name}</label>
-          // <input
-          //   id="${inputGroup.id}"
-          //   formControlName="${inputGroup.name}"
-          //   type="${inputGroup.type}"
-          //   class="form-control"
-          //   placeholder="Escriba el ${inputGroup.name} del input"
-          // />
-  //       </div>
-  //     `;
-
-  //     generatedTsString += `       ${inputGroup.name}: this.formBuilder.control(''),
-  //     `;
-  //   });
-
-  //   generatedTsString += `
-  //       });
-  //     }
-  //   `;
 }
