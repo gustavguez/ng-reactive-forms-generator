@@ -9,6 +9,7 @@ import { GeneratorTemplates } from './generator-templates';
 import { ArrayUtility } from '../shared/utilities/array.utility';
 import { GeneratorFormTypesEnum } from './generator-form-types.enum';
 import { StringUtility } from '../shared/utilities/string.utility';
+import { GeneratorFormValidationsEnum } from './generator-form-validations.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +50,7 @@ export class GeneratorService {
       let inputTemplate: string = this.getTemplateByFormType(form.type, generator.templates);
       let formGroupTemplate: string = generator.templates.formGroupHtml;
       let formBuilderTemplate: string = generator.templates.formBuilderTs;
+      let formValidationsTemplate: string[] = [];
 
       //Render vars to input
       inputTemplate = this.renderTemplateVar(inputTemplate, 'id', form.id);
@@ -61,6 +63,20 @@ export class GeneratorService {
 
       //Render form builder vars
       formBuilderTemplate = this.renderTemplateVar(formBuilderTemplate, 'name', form.name);
+
+      //Render validations
+      ArrayUtility.each(form.validations, (validation: GeneratorFormValidationsEnum) => {
+        formValidationsTemplate.push(
+          this.getTemplateByFormValidation(validation, generator.templates)
+        );
+      });
+
+      //Render validations to formBuilder
+      formBuilderTemplate = this.renderTemplateVar(
+          formBuilderTemplate, 
+          'children', 
+          formValidationsTemplate.filter(validation => !!validation).join(', ')
+      );
 
       //Append to global vars
       componentsHtml += this.renderTemplateVar(formGroupTemplate, 'children', inputTemplate);
@@ -96,8 +112,22 @@ export class GeneratorService {
     return template;
   }
 
+  public getTemplateByFormValidation(validation: GeneratorFormValidationsEnum, templates: GeneratorTemplatesInterface): string {
+    let template: string = '';
+
+    switch (validation) {
+      case GeneratorFormValidationsEnum.REQUIRED:
+        template = templates.requiredFormTs;
+        break;
+
+      default:
+        break;
+    }
+    return template;
+  }
+
   public renderTemplateVar(template: string, name: string, value: string): string  {
-    return StringUtility.replace(template, `@${name}`, value);
+    return StringUtility.replace(template, `@${name}`, value ? value : '');
   }
 
 }

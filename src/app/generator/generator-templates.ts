@@ -31,7 +31,9 @@ export class ExampleComponent implements OnInit {
 }`;
 
 const formBuilderTs: string = `
-            @name: this.formBuilder.control(''),`;
+            @name: this.formBuilder.control('', [ @children ]),`;
+
+const requiredFormTs: string = 'Validators.required';
 
 const formHtml: string = 
 `<form name="@name" [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -67,6 +69,7 @@ const inputNumberHtml: string = `
 export const GeneratorTemplates: GeneratorTemplatesInterface = {
     componentTs,
     formBuilderTs,
+    requiredFormTs,
     formHtml,
     formGroupHtml,
     inputTextHtml,
