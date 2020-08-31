@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { GeneratorFormInterface } from '../generator-form.interface';
 import { StringUtility } from '../../shared/utilities/string.utility';
 import { GeneratorFormTypesEnum } from '../generator-form-types.enum';
+import { GeneratorFormValidationsEnum } from '../generator-form-validations.enum';
 
 @Component({
   selector: 'app-generator-start-form',
@@ -13,6 +14,7 @@ import { GeneratorFormTypesEnum } from '../generator-form-types.enum';
 export class GeneratorStartFormComponent implements OnInit {
   //Constants
   static NAMES_SPLITTER_CHAR: string = ',';
+  static REQUIRED_FORM_CHAR: string = '*';
 
   //Outputs
   @Output() onAdd: EventEmitter<GeneratorFormInterface[]> = new EventEmitter();
@@ -44,10 +46,19 @@ export class GeneratorStartFormComponent implements OnInit {
 
       //Notify parent with output
       this.onAdd.emit(names.map(name => {
+        const validations: GeneratorFormValidationsEnum[] = [];
+
+        //Check required char
+        if(name.indexOf(GeneratorStartFormComponent.REQUIRED_FORM_CHAR) > -1){
+          name = name.replace(GeneratorStartFormComponent.REQUIRED_FORM_CHAR, '');
+          validations.push(GeneratorFormValidationsEnum.REQUIRED);
+        }
+
         return { 
           id: StringUtility.randomString(),
           name: StringUtility.replace(name, ' ', '_'),
           label: StringUtility.upperCaseFirstLetter(name),
+          validations: validations,
           type: GeneratorFormTypesEnum.TEXT //By default text
         }
       }));
