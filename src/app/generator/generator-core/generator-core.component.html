@@ -5,7 +5,7 @@
 
       <app-accordion>
         <app-accordion-item 
-          *ngFor="let form of forms; let i = index;" 
+          *ngFor="let form of generatorData.forms; let i = index;" 
           [title]="form.name" 
           [startOpen]="i === 0">
           

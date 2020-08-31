@@ -33,6 +33,7 @@ export class GeneratorCoreFormComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       id: this.formBuilder.control(StringUtility.randomString()),
       name: this.formBuilder.control(this.form.name, Validators.required),
+      label: this.formBuilder.control(this.form.label, Validators.required),
       type: this.formBuilder.control('text', Validators.required),
     })
   }

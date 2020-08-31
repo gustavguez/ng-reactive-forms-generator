@@ -5,6 +5,7 @@ import { ArrayUtility } from 'src/app/shared/utilities/array.utility';
 import { GeneratorResultInterface } from './generator-result.interface';
 import { GeneratorService } from './generator.service';
 import { GeneratorFormInterface } from './generator-form.interface';
+import { GeneratorInterface } from './generator.interface';
 
 @Component({
   selector: 'app-generator',
@@ -32,8 +33,8 @@ export class GeneratorComponent implements OnInit, OnDestroy {
 
     //Subscribes
     this.subscriptions = [
-      this.generatorService.onGenerateRequested.subscribe((generators: GeneratorFormInterface[]) => {
-        this.startGenerating(generators);
+      this.generatorService.onGenerateRequested.subscribe((generator: GeneratorInterface) => {
+        this.startGenerating(generator);
       }),
       this.generatorService.onStartAgain.subscribe(() => {
         this.startAgain();
@@ -70,9 +71,9 @@ export class GeneratorComponent implements OnInit, OnDestroy {
   }
 
   //Private methods
-  private startGenerating(generators: GeneratorFormInterface[]): void {
+  private startGenerating(generator: GeneratorInterface): void {
     //Generate and load it to results
-    this.generatorResult = this.generatorService.generate(generators);
+    this.generatorResult = this.generatorService.generate(generator);
 
     //Display
     this.displayGenerated = true;

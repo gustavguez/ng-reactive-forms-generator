@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { GeneratorService } from '../generator.service';
 import { ArrayUtility } from 'src/app/shared/utilities/array.utility';
 import { GeneratorFormInterface } from '../generator-form.interface';
+import { GeneratorInterface } from '../generator.interface';
 
 @Component({
   selector: 'app-generator-core',
@@ -15,7 +16,7 @@ export class GeneratorCoreComponent implements OnInit, OnDestroy {
   @Input() startForms: GeneratorFormInterface[];
 
   //Models
-  forms: GeneratorFormInterface[];
+  generatorData: GeneratorInterface;
   subscriptions: Subscription[];
 
   //Inject services
@@ -25,14 +26,15 @@ export class GeneratorCoreComponent implements OnInit, OnDestroy {
 
   //On component init
   ngOnInit(): void {
-    
-    //Create form
-    this.forms = ArrayUtility.hasValue(this.startForms) ? this.startForms : [];
+    this.generatorData = {
+      forms: ArrayUtility.hasValue(this.startForms) ? this.startForms : [],
+      templates: this.generatorService.getStartingTemplates()
+    };
 
     //Subscribes
     this.subscriptions = [
       this.generatorService.onGenerateFormsRequested.subscribe((forms: GeneratorFormInterface[]) => {
-        this.forms.push(...forms);
+        this.generatorData.forms.push(...forms);
       })
     ]
   }
@@ -44,14 +46,14 @@ export class GeneratorCoreComponent implements OnInit, OnDestroy {
 
   //Custom events
   onGenerateClick(): void {
-    this.generatorService.emitGenerateRequested(this.forms);
+    this.generatorService.emitGenerateRequested(this.generatorData);
   }
 
   onFormValueChange(newValue: { key: string, value: string }, index: number): void {
     //Check
-    if(this.forms[index]){
+    if(this.generatorData.forms[index]){
       //Update value to model
-      this.forms[index][newValue.key] = newValue.value;
+      this.generatorData.forms[index][newValue.key] = newValue.value;
     }
   }
 }

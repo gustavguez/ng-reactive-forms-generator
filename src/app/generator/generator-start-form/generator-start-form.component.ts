@@ -46,7 +46,8 @@ export class GeneratorStartFormComponent implements OnInit {
       this.onAdd.emit(names.map(name => {
         return { 
           id: StringUtility.randomString(),
-          name: name,
+          name: StringUtility.replace(name, ' ', '_'),
+          label: StringUtility.upperCaseFirstLetter(name),
           type: GeneratorFormTypesEnum.TEXT //By default text
         }
       }));

@@ -13,6 +13,7 @@ import { GeneratorResultComponent } from './generator-result/generator-result.co
 import { GeneratorCoreFooterComponent } from './generator-core/generator-core-footer/generator-core-footer.component';
 import { GeneratorCoreFormComponent } from './generator-core/generator-core-form/generator-core-form.component';
 import { GeneratorResultFooterComponent } from './generator-result/generator-result-footer/generator-result-footer.component';
+import { GeneratorCoreTemplateComponent } from './generator-core/generator-core-template/generator-core-template.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { GeneratorResultFooterComponent } from './generator-result/generator-res
     GeneratorCoreFooterComponent,
     GeneratorCoreFormComponent,
     GeneratorResultFooterComponent,
+    GeneratorCoreTemplateComponent,
   ],
   imports: [
     CommonModule, 
