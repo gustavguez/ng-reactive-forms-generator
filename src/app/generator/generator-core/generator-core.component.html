@@ -1,0 +1,65 @@
+<div class="container-fluid px-5 mb-5">
+  <div class="row">
+    <div class="col-sm-12 col-md-6 pt-3 pb-4">
+      <h3 class="mb-4 mt-2">Forms</h3>
+
+      <app-accordion>
+        <app-accordion-item 
+          *ngFor="let form of generatorData.forms; let i = index;" 
+          [title]="form.name" 
+          [startOpen]="i === 0">
+          
+          <app-generator-core-form 
+            [form]="form"
+            (onFormValueChange)="onFormValueChange($event, i)">
+          </app-generator-core-form>
+
+        </app-accordion-item>
+      </app-accordion>
+    </div>
+    <div class="col-sm-12 col-md-6 pt-3 pb-4 border-left">
+      <h3 class="mb-4 mt-2">Templates</h3>
+
+      <app-accordion>
+        <app-accordion-item [title]="'Component template'">
+          <app-generator-core-template 
+            [template]="generatorData.templates.componentTs"
+            (onTemplateValueChange)="onTemplateValueChange('componentTs', $event)">
+          </app-generator-core-template>
+        </app-accordion-item>
+
+        <app-accordion-item [title]="'Form builder line template'">
+          <app-generator-core-template 
+            [template]="generatorData.templates.formBuilderTs"
+            (onTemplateValueChange)="onTemplateValueChange('formBuilderTs', $event)">
+          </app-generator-core-template>
+        </app-accordion-item>
+
+        <app-accordion-item [title]="'Form template'">
+          <app-generator-core-template 
+            [template]="generatorData.templates.formHtml"
+            (onTemplateValueChange)="onTemplateValueChange('formHtml', $event)">
+          </app-generator-core-template>
+        </app-accordion-item>
+
+        <app-accordion-item [title]="'Input text template'">
+          <app-generator-core-template 
+            [template]="generatorData.templates.inputTextHtml"
+            (onTemplateValueChange)="onTemplateValueChange('inputTextHtml', $event)">
+          </app-generator-core-template>
+        </app-accordion-item>
+
+        <app-accordion-item [title]="'Input number template'">
+          <app-generator-core-template 
+            [template]="generatorData.templates.inputNumberHtml"
+            (onTemplateValueChange)="onTemplateValueChange('inputNumberHtml', $event)">
+          </app-generator-core-template>
+        </app-accordion-item>
+      </app-accordion>
+    </div>
+  </div>
+</div>
+
+<app-generator-core-footer 
+  (onGenerate)="onGenerateClick()">
+</app-generator-core-footer>

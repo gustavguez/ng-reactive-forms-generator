@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GeneratorFormComponent } from './generator-form.component';
+import { AccordionItemComponent } from './accordion-item.component';
 
-describe('GeneratorFormComponent', () => {
-  let component: GeneratorFormComponent;
-  let fixture: ComponentFixture<GeneratorFormComponent>;
+describe('AccordionItemComponent', () => {
+  let component: AccordionItemComponent;
+  let fixture: ComponentFixture<AccordionItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GeneratorFormComponent ]
+      declarations: [ AccordionItemComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GeneratorFormComponent);
+    fixture = TestBed.createComponent(AccordionItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

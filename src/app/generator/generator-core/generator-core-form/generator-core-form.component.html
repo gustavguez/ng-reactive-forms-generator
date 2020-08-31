@@ -1,0 +1,43 @@
+<form [formGroup]="formGroup">
+  <div class="row">
+    <div class="col-sm-6 col-12">
+        <div class="form-group">
+          <label>Name</label>
+          <input
+            formControlName="name"
+            type="text"
+            class="form-control"
+            placeholder="Enter input name"
+            (change)="onValueChanged('name', formGroup.value.name)"
+          />
+        </div>
+      </div>
+    <div class="col-sm-6 col-12">
+        <div class="form-group">
+          <label>Label</label>
+          <input
+            formControlName="label"
+            type="text"
+            class="form-control"
+            placeholder="Enter input label"
+            (change)="onValueChanged('label', formGroup.value.label)"
+          />
+        </div>
+      </div>
+      <div class="col-sm-6 col-12">
+        <div class="form-group">
+          <label>Type</label>
+          <select 
+            class="form-control" 
+            formControlName="type"
+            (change)="onValueChanged('type', formGroup.value.type)">
+            <option
+              *ngFor="let option of types" 
+              [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
+    </div>
+  </div>
+</form>
